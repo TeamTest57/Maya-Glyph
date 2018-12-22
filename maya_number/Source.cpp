@@ -1,8 +1,9 @@
 #include "MayaGlyph.hpp"
+#include <limits>
 
 int main() {
 
-	uint8_t num = UINT8_MAX;
+	constexpr uint8_t num{ std::numeric_limits<uint8_t>::max() };
 	std::vector<unsigned char> maya_num;
 
 	maya::mayaNumber(num, maya_num);

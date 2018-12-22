@@ -1,135 +1,138 @@
-#pragma once
-#include <iostream>
+ï»¿#ifndef INCLUDED_MAYA_GLYPH_LIBRARY
+#define INCLUDED_MAYA_GLYPH_LIBRARY
 #include <vector>
 #include <string>
+#include <iostream>
 
 namespace maya {
 
-	//’Êí‚Ì”š‚ğƒ}ƒ„”š‚É•ÏŠ·‚·‚é
+	//é€šå¸¸ã®æ•°å­—ã‚’ãƒãƒ¤æ•°å­—ã«å¤‰æ›ã™ã‚‹
 	template <typename NormalNum, typename MayaNum>
-	void mayaNumber(NormalNum num_, std::vector<MayaNum>& maya_num_) {
-		//ŠeˆÊ‚ÌãŒÀ’l
-		constexpr NormalNum num_20 = (NormalNum)20;
-		constexpr NormalNum num_18 = (NormalNum)18;
-		constexpr NormalNum num_0 = (NormalNum)0;
-		//—v‘f‚ğÁ‹
+	constexpr void mayaNumber(NormalNum num_, std::vector<MayaNum>& maya_num_) noexcept {
+		//å„ä½ã®ä¸Šé™å€¤
+		constexpr NormalNum num_20{ static_cast<NormalNum>(20) };
+		constexpr NormalNum num_18{ static_cast<NormalNum>(18) };
+		constexpr NormalNum num_0{ static_cast<NormalNum>(0) };
+		//è¦ç´ ã‚’æ¶ˆå»
 		maya_num_.clear();
-		//Œ³‚Ì”š‚ª0ˆÈ‰º‚Ìê‡
+		//å…ƒã®æ•°å­—ãŒ0ä»¥ä¸‹ã®å ´åˆ
 		if (num_ <= num_0) {
-			maya_num_.emplace_back((MayaNum)0);
+			maya_num_.emplace_back(static_cast<MayaNum>(0));
 			return;
 		}
-		//1Œ…–Ú‚ğ‘I’è (0~19)
-		maya_num_.emplace_back((MayaNum)(num_ % num_20));
+		//1æ¡ç›®ã‚’é¸å®š (0~19)
+		maya_num_.emplace_back(static_cast<MayaNum>(num_ % num_20));
 		if ((num_ /= num_20) == 0) return;
-		//2Œ…–Ú‚ğ‘I’è (0~17)
-		maya_num_.emplace_back((MayaNum)(num_ % num_18));
+		//2æ¡ç›®ã‚’é¸å®š (0~17)
+		maya_num_.emplace_back(static_cast<MayaNum>(num_ % num_18));
 		if ((num_ /= num_18) == 0) return;
-		//3Œ…–ÚˆÈ~‚ğ‘I’è (0~19)
+		//3æ¡ç›®ä»¥é™ã‚’é¸å®š (0~19)
 		while (true) {
-			maya_num_.emplace_back((MayaNum)(num_ % num_20));
+			maya_num_.emplace_back(static_cast<MayaNum>(num_ % num_20));
 			if ((num_ /= num_20) == 0) return;
 		}
 	}
 	template <typename MayaNum>
-	void mayaNumber(const float num_, std::vector<MayaNum>& maya_num_) {
+	constexpr void mayaNumber(const float num_, std::vector<MayaNum>& maya_num_) noexcept {
 		mayaNumber((unsigned long long)num_, maya_num_);
 	}
 	template <typename MayaNum>
-	void mayaNumber(const double num_, std::vector<MayaNum>& maya_num_) {
+	constexpr void mayaNumber(const double num_, std::vector<MayaNum>& maya_num_) noexcept {
 		mayaNumber((unsigned long long)num_, maya_num_);
 	}
 	template <typename MayaNum>
-	void mayaNumber(const long double num_, std::vector<MayaNum>& maya_num_) {
+	constexpr void mayaNumber(const long double num_, std::vector<MayaNum>& maya_num_) noexcept {
 		mayaNumber((unsigned long long)num_, maya_num_);
 	}
-	//ƒ}ƒ„”š‚ğo—Í‚·‚é
+	//ãƒãƒ¤æ•°å­—ã‚’å‡ºåŠ›ã™ã‚‹
 	template <typename MayaNum>
-	void mayaNumberOutput(const std::vector<MayaNum>& maya_num_) {
-		for (size_t i = 0; i < maya_num_.size(); ++i)
+	constexpr void mayaNumberOutput(const std::vector<MayaNum>& maya_num_) noexcept {
+		for (size_t i{}; i < maya_num_.size(); ++i)
 			std::cout << maya_num_[i] << ',';
 	}
 	template <>
-	void mayaNumberOutput(const std::vector<unsigned char>& maya_num_) {
-		for (size_t i = 0; i < maya_num_.size(); ++i)
+	void mayaNumberOutput(const std::vector<unsigned char>& maya_num_) noexcept {
+		for (size_t i{}; i < maya_num_.size(); ++i)
 			std::cout << (int)maya_num_[i] << ',';
 	}
 	template <>
-	void mayaNumberOutput(const std::vector<signed char>& maya_num_) {
-		for (size_t i = 0; i < maya_num_.size(); ++i)
+	void mayaNumberOutput(const std::vector<signed char>& maya_num_) noexcept {
+		for (size_t i{}; i < maya_num_.size(); ++i)
 			std::cout << (int)maya_num_[i] << ',';
 	}
-	//’Êí‚Ì”š‚ğƒ}ƒ„”š‚É•ÏŠ·‚µ‚Äo—Í‚·‚é
+	//é€šå¸¸ã®æ•°å­—ã‚’ãƒãƒ¤æ•°å­—ã«å¤‰æ›ã—ã¦å‡ºåŠ›ã™ã‚‹
 	template <typename NormalNum, typename MayaNum>
-	void mayaNumberOutput(const NormalNum& num_, std::vector<MayaNum>& maya_num_) {
+	constexpr void mayaNumberOutput(const NormalNum& num_, std::vector<MayaNum>& maya_num_) noexcept {
 		mayaNumber(num_, maya_num_);
 		mayaNumberOutput(maya_num_);
 	}
-	//’Êí‚Ì”š‚ğƒ}ƒ„”š‚É•ÏŠ·‚µ‚Äo—Í‚·‚é
+	//é€šå¸¸ã®æ•°å­—ã‚’ãƒãƒ¤æ•°å­—ã«å¤‰æ›ã—ã¦å‡ºåŠ›ã™ã‚‹
 	template <typename NormalNum>
-	void mayaNumberOutput(const NormalNum& num_) {
+	constexpr void mayaNumberOutput(const NormalNum& num_) noexcept {
 		std::vector<unsigned char> maya_num_;
 		mayaNumber(num_, maya_num_);
 		mayaNumberOutput(maya_num_);
 	}
 
-	//ƒ}ƒ„”š‚ğ•¶šŒ`®‚É•ÏŠ·‚·‚é
+	//ãƒãƒ¤æ•°å­—ã‚’æ–‡å­—å½¢å¼ã«å¤‰æ›ã™ã‚‹
 	template <typename MayaNum>
-	void mayaNumberUTF(const std::vector<MayaNum>& maya_num_, std::u32string& str_) {
+	constexpr void mayaNumberUTF(const std::vector<MayaNum>& maya_num_, std::u32string& str_) noexcept {
 		str_.clear();
-		for (size_t i = maya_num_.size(); i > 0;)
-			str_.push_back((char32_t)((MayaNum)0x1D2E0 + maya_num_[--i]));
+		for (size_t i{ maya_num_.size() }; i > 0;)
+			str_.push_back(static_cast<char32_t>(static_cast<MayaNum>(0x1D2E0) + maya_num_[--i]));
 	}
 	template <typename MayaNum>
-	void mayaNumberUTF(const std::vector<MayaNum>& maya_num_, std::u16string& str_) {
+	constexpr void mayaNumberUTF(const std::vector<MayaNum>& maya_num_, std::u16string& str_) noexcept {
 		str_.clear();
-		for (size_t i = maya_num_.size(); i > 0;) {
-			str_.push_back((char16_t)0xD834);
-			str_.push_back((char16_t)((MayaNum)0xDEE0 + maya_num_[--i]));
+		for (size_t i{ maya_num_.size() }; i > 0;) {
+			str_.push_back(static_cast<char16_t>(0xD834));
+			str_.push_back(static_cast<char16_t>(static_cast<MayaNum>(0xDEE0) + maya_num_[--i]));
 		}
 	}
 	template <typename MayaNum>
-	void mayaNumberUTF(const std::vector<MayaNum>& maya_num_, std::string& str_) {
+	constexpr void mayaNumberUTF(const std::vector<MayaNum>& maya_num_, std::string& str_) noexcept {
 		str_.clear();
-		for (size_t i = maya_num_.size(); i > 0;) {
-			str_.push_back((char)0xF0);
-			str_.push_back((char)0x9D);
-			str_.push_back((char)0x8B);
-			str_.push_back((char)((MayaNum)0xA0 + maya_num_[--i]));
+		for (size_t i{ maya_num_.size() }; i > 0;) {
+			str_.push_back((char)static_cast<uint8_t>(0xF0));
+			str_.push_back((char)static_cast<uint8_t>(0x9D));
+			str_.push_back((char)static_cast<uint8_t>(0x8B));
+			str_.push_back((char)(static_cast<MayaNum>(0xA0) + maya_num_[--i]));
 		}
 	}
-	//’Êí‚Ì”š‚ğƒ}ƒ„”š‚Ì•¶šŒ`®‚É•ÏŠ·‚·‚é
+	//é€šå¸¸ã®æ•°å­—ã‚’ãƒãƒ¤æ•°å­—ã®æ–‡å­—å½¢å¼ã«å¤‰æ›ã™ã‚‹
 	template <typename NormalNum, typename MayaNum>
-	void mayaNumberUTF(const NormalNum& num_, std::vector<MayaNum>& maya_num_, std::string& str_) {
+	constexpr void mayaNumberUTF(const NormalNum& num_, std::vector<MayaNum>& maya_num_, std::string& str_) noexcept {
 		mayaNumber(num_, maya_num_);
 		mayaNumberUTF(maya_num_, str_);
 	}
 	template <typename NormalNum>
-	void mayaNumberUTF(const NormalNum& num_, std::string& str_) {
+	constexpr void mayaNumberUTF(const NormalNum& num_, std::string& str_) noexcept {
 		std::vector<unsigned char> maya_num_;
 		mayaNumber(num_, maya_num_);
 		mayaNumberUTF(maya_num_, str_);
 	}
 	template <typename NormalNum, typename MayaNum>
-	void mayaNumberUTF(const NormalNum& num_, std::vector<MayaNum>& maya_num_, std::u16string& str_) {
+	constexpr void mayaNumberUTF(const NormalNum& num_, std::vector<MayaNum>& maya_num_, std::u16string& str_) noexcept {
 		mayaNumber(num_, maya_num_);
 		mayaNumberUTF(maya_num_, str_);
 	}
 	template <typename NormalNum>
-	void mayaNumberUTF(const NormalNum& num_, std::u16string& str_) {
+	constexpr void mayaNumberUTF(const NormalNum& num_, std::u16string& str_) noexcept {
 		std::vector<unsigned char> maya_num_;
 		mayaNumber(num_, maya_num_);
 		mayaNumberUTF(maya_num_, str_);
 	}
 	template <typename NormalNum, typename MayaNum>
-	void mayaNumberUTF(const NormalNum& num_, std::vector<MayaNum>& maya_num_, std::u32string& str_) {
+	constexpr void mayaNumberUTF(const NormalNum& num_, std::vector<MayaNum>& maya_num_, std::u32string& str_) noexcept {
 		mayaNumber(num_, maya_num_);
 		mayaNumberUTF(maya_num_, str_);
 	}
 	template <typename NormalNum>
-	void mayaNumberUTF(const NormalNum& num_, std::u32string& str_) {
+	constexpr void mayaNumberUTF(const NormalNum& num_, std::u32string& str_) noexcept {
 		std::vector<unsigned char> maya_num_;
 		mayaNumber(num_, maya_num_);
 		mayaNumberUTF(maya_num_, str_);
 	}
 }
+
+#endif //Included Maya-Glyph Library
