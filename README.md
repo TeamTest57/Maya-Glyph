@@ -1,4 +1,4 @@
-![MayaGlyph](https://raw.githubusercontent.com/Kasugaccho/Kasugaccho/master/Picture/maya_glyph.png)
+![MayaGlyph](https://raw.githubusercontent.com/AsPJT/AsPJT/master/Picture/maya_glyph.png)
 
 # License
 
